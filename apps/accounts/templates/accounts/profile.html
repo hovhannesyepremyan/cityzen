@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+    {% include "layout/navbar.html" %}
+
+        <section class="profile-section">
+            <div class="profile-container">
+                <h2 class="profile-title">Profile</h2>
+                <form method="get" class="profile-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </form>
+            </div>
+        </section>
+
+
+{% endblock %}

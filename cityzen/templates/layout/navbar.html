@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load static %}
+<body>
+    <header>
+        <div class="navbar-section headersss slideDown">
+            <div class="container">
+                <div class="logo">
+                    <h1>Citizen</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'core:homepage' %}">Districts</a></li>
+                        <li><a href="">Volunteers</a></li>
+
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'accounts:profile' %}">Profile</a></li>
+                            <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                        {% else %}
+                            <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                            <li><a href="{% url 'accounts:signup' %}">Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+</body>

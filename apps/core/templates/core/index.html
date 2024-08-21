@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+    {% include "layout/navbar.html" %}
+    <main>
+        <div class="districts-grid">
+            {% for district in districts %}
+            <a href="{{ district.get_absolute_url }}" class="district-link">
+                <div class="district-container">
+                    <img src="{{ district.image.url }}" alt="Image of {{ district.name }}">
+                    <div class="text-overlay">
+                        <p>{{ district.name }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+
+{% endblock %}
