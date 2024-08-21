@@ -25,19 +25,20 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     created = models.DateTimeField(default=timezone.now, editable=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     bio = models.TextField(null=True, blank=True)
-    avatar = models.ImageField(upload_to=get_file_path, null=True, blank=True)
+
+    avatar = models.ImageField(null=True, blank=True, upload_to=get_file_path)
+    slug = models.SlugField(null=True, blank=True, unique=True)
 
     age = models.PositiveIntegerField(null=True, blank=True)
     district = models.ForeignKey("core.District", on_delete=models.CASCADE, blank=True, null=True)
     volunteer = models.BooleanField(default=False)
-
 
     objects = CustomUserManager()
 

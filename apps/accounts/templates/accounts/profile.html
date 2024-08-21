@@ -5,15 +5,32 @@
 
     {% include "layout/navbar.html" %}
 
-        <section class="profile-section">
-            <div class="profile-container">
-                <h2 class="profile-title">Profile</h2>
-                <form method="get" class="profile-form">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                </form>
-            </div>
-        </section>
+    <section class="profile-section">
+        <div class="profile-container">
+            <h2 class="profile-title">Profile</h2>
 
+            <div class="avatar-container">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="Profile Avatar" class="profile-avatar">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="Default Avatar" class="profile-avatar">
+                {% endif %}
+            </div>
+
+            <div class="profile-info">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                {% if user.bio %}
+                    <p><strong>Bio:</strong> {{ user.bio }}</p>
+                {% endif %}
+                {% if user.age %}
+                    <p><strong>Age:</strong> {{ user.age }}</p>
+                {% endif %}
+
+<!--                <p><strong>District:</strong> {{ user.district.get.name }}</p>-->
+                <p><strong>Volunteer:</strong> {{ user.volunteer|yesno:"Yes,No" }}</p>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

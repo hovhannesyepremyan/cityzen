@@ -78,27 +78,3 @@ class LoginForm(forms.Form):
             return user, cleaned_data.get('remember_me')
 
         return None, None
-
-
-class BaseAccountForm(forms.ModelForm):
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        user = get_user_model().objects.filter(email__iexact=email).exclude(pk=self.instance.pk).first()
-        if user:
-            raise forms.ValidationError('There is a user with this email!')
-
-        return email
-
-
-class AccountForm(BaseAccountForm):
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
-    bio = forms.CharField(required=False)
-    avatar = forms.ImageField(required=False)
-    age = forms.IntegerField(required=False)
-    # district = # TODO: editable=False
-    volunteer = forms.BooleanField(required=True)
-
-    class Meta:
-        model = get_user_model()
-        fields = ('first_name', 'last_name', 'email', 'bio', 'avatar', 'volunteer')

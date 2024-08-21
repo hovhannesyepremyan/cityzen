@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from . import forms
+from .models import User
 
 
 class SignupView(View):
@@ -38,13 +39,10 @@ class LoginView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request, *args, **kwargs):
-        user = request.user
-        form = forms.AccountForm(instance=user)
-        return render(request, 'accounts/profile.html', {'form': form})
+        user = User.objects.filter(email=request.user.email).first()
+        # TODO: connect district
+        return render(request, 'accounts/profile.html', {'user': user})
 
-    def post(self, request, *args, **kwargs):
-        # TODO: make profile editable
-        pass
 
 
 @method_decorator(login_required, name='dispatch')
