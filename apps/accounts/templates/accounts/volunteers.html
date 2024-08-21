@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+{% include "layout/navbar.html" %}
+
+<section class="volunteers-section">
+    <div class="volunteers-grid">
+        {% for volunteer in volunteers %}
+        <div class="volunteer-card">
+            <img src="{% if volunteer.avatar %}{{ volunteer.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Avatar of {{ volunteer.first_name }}" class="volunteer-avatar">
+            <div class="volunteer-details">
+                <h3 class="volunteer-name">{{ volunteer.first_name }} {{ volunteer.last_name }}</h3>
+                <p><strong>Email:</strong> {{ volunteer.email }}</p>
+                {% if volunteer.bio %}
+                    <p><strong>Bio:</strong> {{ volunteer.bio }}</p>
+                {% endif %}
+                {% if volunteer.age %}
+                    <p><strong>Age:</strong> {{ volunteer.age }}</p>
+                {% endif %}
+                <p><strong>District:</strong> {{ volunteer.district.name }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

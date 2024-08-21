@@ -10,7 +10,7 @@
                 <nav>
                     <ul>
                         <li><a href="{% url 'core:homepage' %}">Districts</a></li>
-                        <li><a href="">Volunteers</a></li>
+                        <li><a href="{% url 'accounts:volunteers_list' %}">Volunteers</a></li>
 
                         {% if request.user.is_authenticated %}
                             <li><a href="{% url 'accounts:profile' %}">Profile</a></li>

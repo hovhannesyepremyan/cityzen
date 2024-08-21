@@ -13,6 +13,7 @@ auth_patterns = [
 
 profile_patterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('volunteers-list/', views.VolunteersView.as_view(), name='volunteers_list'),
 ]
 
 urlpatterns = [

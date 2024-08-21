@@ -39,15 +39,12 @@ class LoginView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request, *args, **kwargs):
-        user = User.objects.filter(email=request.user.email).first()
-        # TODO: connect district
+        user = User.objects.filter(email=request.user.email).select_related().first()
         return render(request, 'accounts/profile.html', {'user': user})
 
 
-
 @method_decorator(login_required, name='dispatch')
-class VolunteerView(View):
+class VolunteersView(View):
     def get(self, request, *args, **kwargs):
-        # TODO: Implement endpoint and create html file
-        pass
-
+        volunteers = User.objects.filter(volunteer=True).select_related()
+        return render(request, 'accounts/volunteers.html', {'volunteers': volunteers})
