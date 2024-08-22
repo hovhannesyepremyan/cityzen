@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
@@ -24,7 +24,7 @@ class CreatePostView(View):
 
         if form.is_valid():
             form.save(user=request.user)
-            return redirect('posts:posts')
+            return redirect('posts:posts', district_id=request.user.district.id)
 
         return render(request, 'create_post.html', {'form': form})
 

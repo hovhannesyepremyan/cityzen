@@ -4,11 +4,11 @@
 {% block content %}
 
     {% include "layout/navbar.html" %}
-{% if request.user.is_authenticated %}
-    <div class="create-post-container">
-        <a href="{% url 'posts:create_post' %}" class="create-post-button">Create Post</a>
-    </div>
-{% endif %}
+    {% if request.user.is_authenticated %}
+        <div class="create-post-container">
+            <a href="{% url 'posts:create_post' %}" class="create-post-button">Create Post</a>
+        </div>
+    {% endif %}
 
 <div class="posts-container">
     {% for post in posts %}
