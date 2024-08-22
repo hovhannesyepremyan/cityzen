@@ -50,3 +50,50 @@
 .volunteer-details p strong {
     color: #333;
 }
+
+.volunteers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, auto)
+    gap: 15px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.volunteer-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 500px;
+}
+
+.volunteer-image-container {
+    height: 180px;
+    overflow: hidden;
+}
+
+.volunteer-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.volunteer-name {
+    background-color: #87ba84;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.volunteer-bio {
+    padding: 8px
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-size: 14px;
+}

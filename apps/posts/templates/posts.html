@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+    {% include "layout/navbar.html" %}
+{% if request.user.is_authenticated %}
+    <div class="create-post-container">
+        <a href="{% url 'posts:create_post' %}" class="create-post-button">Create Post</a>
+    </div>
+{% endif %}
+
+<div class="posts-container">
+    {% for post in posts %}
+    <div class="post-card">
+
+        <div class="post-image-container">
+          {% if post.image %}
+              <img src="{{ post.image.url }}" alt="{{ post.name }}" class="post-image">
+          {% endif %}
+        </div>
+
+        <div class="post-content">
+            <h2 class="post-title">{{ post.name }}</h2>
+            <p class="post-description">{{ post.description }}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p>No posts available for this district.</p>
+    {% endfor %}
+</div>
+{% endblock %}

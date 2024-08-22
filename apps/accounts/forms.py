@@ -26,7 +26,7 @@ class SignupForm(BaseSignupForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     age = forms.IntegerField(required=False)
-    district = forms.ModelChoiceField(queryset=District.objects.all())
+    district = forms.ModelChoiceField(queryset=District.objects.all(), required=True)
     bio = forms.CharField(required=False)
     volunteer = forms.BooleanField(required=False)
     password = forms.CharField(widget=forms.PasswordInput)

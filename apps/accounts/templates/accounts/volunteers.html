@@ -5,12 +5,14 @@
 
 {% include "layout/navbar.html" %}
 
-<section class="volunteers-section">
+
     <div class="volunteers-grid">
         {% for volunteer in volunteers %}
-        <div class="volunteer-card">
-            <img src="{% if volunteer.avatar %}{{ volunteer.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Avatar of {{ volunteer.first_name }}" class="volunteer-avatar">
-            <div class="volunteer-details">
+        <div class="volunteer-container ">
+           <div class="volunteer-image-container">
+                <img src="{% if volunteer.avatar %}{{ volunteer.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Avatar of {{ volunteer.first_name }}" class="volunteer-avatar">
+            </div>
+               <div class="volunteer-details">
                 <h3 class="volunteer-name">{{ volunteer.first_name }} {{ volunteer.last_name }}</h3>
                 <p><strong>Email:</strong> {{ volunteer.email }}</p>
                 {% if volunteer.bio %}
@@ -24,6 +26,6 @@
         </div>
         {% endfor %}
     </div>
-</section>
+
 
 {% endblock %}

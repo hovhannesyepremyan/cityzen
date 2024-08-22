@@ -80,8 +80,8 @@ env.bak/
 venv.bak/
 
 *.DS_Store
-cityzen/apps/.DS_Store
-cityzen/apps/**/.DS_Store
+project/apps/.DS_Store
+project/apps/**/.DS_Store
 
 # Project specific
 site-packages/

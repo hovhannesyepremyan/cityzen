@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login as django_login
+from django.contrib.auth import login as django_login, logout as django_logout
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -34,6 +34,12 @@ class LoginView(View):
             return redirect('core:homepage')
 
         return render(request, 'layout/modals/login.html', {'form': form})
+
+
+class LogoutView(View):
+    def get(self, request):
+        django_logout(request)
+        return redirect('core:homepage')
 
 
 @method_decorator(login_required, name='dispatch')

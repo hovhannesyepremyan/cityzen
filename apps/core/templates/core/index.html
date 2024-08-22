@@ -7,7 +7,7 @@
     <main>
         <div class="districts-grid">
             {% for district in districts %}
-            <a href="{{ district.get_absolute_url }}" class="district-link">
+            <a href="{% url 'posts:posts' district_id=district.id  %}" class="district-link">
                 <div class="district-container">
                     <img src="{{ district.image.url }}" alt="Image of {{ district.name }}">
                     <div class="text-overlay">
