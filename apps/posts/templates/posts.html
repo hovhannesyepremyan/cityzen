@@ -13,7 +13,9 @@
 <div class="posts-container">
     {% for post in posts %}
     <div class="post-card">
-
+        {% if request.user.is_authenticated and post.district.id == request.user.district.id %}
+            <a href="{% url 'posts:post_detail' post_id=post.id  %}">
+        {% endif %}
         <div class="post-image-container">
           {% if post.image %}
               <img src="{{ post.image.url }}" alt="{{ post.name }}" class="post-image">
@@ -25,6 +27,7 @@
             <p class="post-description">{{ post.description }}</p>
         </div>
     </div>
+
     {% empty %}
     <p>No posts available for this district.</p>
     {% endfor %}

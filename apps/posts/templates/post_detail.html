@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+{% include "layout/navbar.html" %}
+
+<div class="post-detail-container">
+    <h1>{{ post.name }}</h1>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.name }}" style="max-width: 100%;">
+    {% endif %}
+    <p>{{ post.description }}</p>
+</div>
+
+<div class="comments-section">
+    <h2>Comments</h2>
+    <form id="comment-form" method="post">
+        {% csrf_token %}
+        <textarea name="comment" id="comment-text" placeholder="Write a comment..." required></textarea>
+        <button type="submit">Post Comment</button>
+    </form>
+    <div id="comments-list">
+        {% for comment in comments %}
+        <div class="comment">
+            {% if comment.user.avatar %}
+                    <img src="{{ comment.user.avatar.url }}" alt="Profile Avatar" class="profile-avatar">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="Default Avatar" class="profile-avatar">
+                {% endif %}
+            <strong>{{ comment.user.full_name }}</strong>
+            <p>Date: {{ comment.created }}</p>
+            <p>Comment: {{ comment.text }}</p>
+        </div>
+        {% empty %}
+        <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('comment-form');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch("{% url 'post_detail' post_id=post.id %}", {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === 'ok') {
+                // Add the new comment to the comments list
+                const commentsList = document.getElementById('comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment';
+                newComment.innerHTML = `<strong>${data.user}</strong><p>${data.comment}</p>`;
+                commentsList.appendChild(newComment);
+                // Clear the textarea
+                document.getElementById('comment-text').value = '';
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, reverse
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 
 from . import forms
-from .models import Post
+from .models import Post, Comment
 
 
 class PostsView(View):
@@ -30,7 +32,20 @@ class CreatePostView(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class PostView(View):
+class PostDetailView(View):
     def get(self, request, post_id):
-        # connect comments
-        return render(request, 'layout/modals/signup.html', {'form': 'form'})
+        post = get_object_or_404(Post, id=post_id)
+        comments = Comment.objects.filter(post=post).order_by('-id')
+        if request.user.district.id == post.district.id:
+            return render(request, 'post_detail.html', {'post': post, 'comments': comments})
+        return redirect('posts:posts', district_id=request.user.district.id)
+
+    @csrf_exempt
+    def post(self, request, post_id):
+        # TODO: Fix the comment submit redirect issue
+        post = get_object_or_404(Post, id=post_id)
+        comment_text = request.POST.get('comment')
+        if comment_text:
+            Comment.objects.create(text=comment_text, user=request.user, post=post)
+            return JsonResponse({'status': 'ok', 'comment': comment_text, 'user': request.user.full_name})
+        return JsonResponse({'status': 'error', 'message': 'No comment provided'})

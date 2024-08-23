@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from apps.core.helpers import get_file_path
 
@@ -19,6 +20,8 @@ class Comment(models.Model):
     text = models.TextField()
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    created = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
         return self.text
